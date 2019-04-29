@@ -5,9 +5,10 @@ contract Casino {
 	address owner;
 	//YOUR CODE HERE
 	uint public pool;
-	uint numberOfBets;
-	uint maxAmountOfBets;
-	address payable[] winners;
+	uint public numberOfBets;
+	uint public maxAmountOfBets;
+	uint public minimumBet;
+	address payable[] public winners;
 	address payable [] public addrKeys;
 
 	//private variables for each user
@@ -17,12 +18,13 @@ contract Casino {
 	// Create a constructor here!
 	// The constructor will be used to configure different parameters you might want to
 	// initialize with the creation of the contract (i.e. minimum bet, max amount of bets, etc.)
-	constructor (uint _numberOfBets, uint _maxAmountOfBets) public {
+	constructor (uint _numberOfBets, uint _maxAmountOfBets, uint _minimumBet) public {
 		owner = msg.sender;
 		// YOUR CODE HERE
 		pool = 0;
 		numberOfBets = _numberOfBets;
 		maxAmountOfBets = _maxAmountOfBets;
+		minimumBet = _minimumBet;
 	}
 
 	// Below is a modifier, and the purpose of this modifier is to execute the other functions
@@ -52,6 +54,7 @@ contract Casino {
 		//need user to not have betted before
 		require(isIn(msg.sender) == false );
 		require(numberToBet > 0);
+		require(msg.value > minimumBet);
 		addrKeys.push(msg.sender);
 		pool += msg.value;
 		individualTotalBetAmount[msg.sender] += msg.value;
