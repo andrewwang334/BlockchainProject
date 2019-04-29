@@ -7,7 +7,6 @@ class App extends React.Component {
    constructor(props){
       super(props)
       this.state = {
-         lastWinner: 0,
          numberOfBets: 0,
          minimumBet: 0,
          totalBet: 0,
@@ -18,105 +17,174 @@ class App extends React.Component {
       if(typeof web3 != 'undefined'){
          console.log("Using web3 detected from external source like Metamask")
          this.web3 = new Web3(web3.currentProvider);
-         const MyContract = this.web3.eth.contract([
+         const MyContract = this.web3.eth.contract(
            [
-  	{
-  		"constant": false,
-  		"inputs": [
-  			{
-  				"name": "numberToBet",
-  				"type": "uint256"
-  			}
-  		],
-  		"name": "bet",
-  		"outputs": [],
-  		"payable": true,
-  		"stateMutability": "payable",
-  		"type": "function"
-  	},
-  	{
-  		"constant": false,
-  		"inputs": [],
-  		"name": "distributePrizes",
-  		"outputs": [],
-  		"payable": true,
-  		"stateMutability": "payable",
-  		"type": "function"
-  	},
-  	{
-  		"constant": false,
-  		"inputs": [],
-  		"name": "generateWinningNumber",
-  		"outputs": [
-  			{
-  				"name": "",
-  				"type": "uint256"
-  			}
-  		],
-  		"payable": false,
-  		"stateMutability": "nonpayable",
-  		"type": "function"
-  	},
-  	{
-  		"constant": false,
-  		"inputs": [],
-  		"name": "resetData",
-  		"outputs": [],
-  		"payable": false,
-  		"stateMutability": "nonpayable",
-  		"type": "function"
-  	},
-  	{
-  		"inputs": [
-  			{
-  				"name": "_numberOfBets",
-  				"type": "uint256"
-  			},
-  			{
-  				"name": "_maxAmountOfBets",
-  				"type": "uint256"
-  			}
-  		],
-  		"payable": false,
-  		"stateMutability": "nonpayable",
-  		"type": "constructor"
-  	},
-  	{
-  		"constant": true,
-  		"inputs": [
-  			{
-  				"name": "",
-  				"type": "uint256"
-  			}
-  		],
-  		"name": "addrKeys",
-  		"outputs": [
-  			{
-  				"name": "",
-  				"type": "address"
-  			}
-  		],
-  		"payable": false,
-  		"stateMutability": "view",
-  		"type": "function"
-  	},
-  	{
-  		"constant": true,
-  		"inputs": [],
-  		"name": "pool",
-  		"outputs": [
-  			{
-  				"name": "",
-  				"type": "uint256"
-  			}
-  		],
-  		"payable": false,
-  		"stateMutability": "view",
-  		"type": "function"
-  	}
-  ]
-         ]);
-         this.state.ContractInstance = MyContract.at("0x0526f8d4e3ea2e3d36bb3e66607736631f64ab27");
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "pool",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "generateWinningNumber",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "numberOfBets",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "resetData",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "numberToBet",
+				"type": "uint256"
+			}
+		],
+		"name": "bet",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "distributePrizes",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "winners",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "addrKeys",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "minimumBet",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "maxAmountOfBets",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"name": "_numberOfBets",
+				"type": "uint256"
+			},
+			{
+				"name": "_minimumBet",
+				"type": "uint256"
+			},
+			{
+				"name": "_totalBet",
+				"type": "uint256"
+			},
+			{
+				"name": "_maxAmountOfBets",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	}
+]
+         );
+         this.state.ContractInstance = MyContract.at(" 0x8f6ea8d21b2b536270210edfae6018e555699622");
          window.a = this.state;
       } else {
          console.log("No web3 detected. Falling back to http://localhost:8545. You should remove this fallback when you live, as it's inherently insecure. Consider switching to Metamask for development. More info here: http://truffleframework.com/tutorials/truffle-and-metamask");
@@ -213,11 +281,6 @@ class App extends React.Component {
                   <div className="block">
                      <b>Number of bets:</b> &nbsp;
                      <span>{this.state.numberOfBets}</span>
-                  </div>
-
-                  <div className="block">
-                     <b>Last number winner:</b> &nbsp;
-                     <span>{this.state.lastWinner}</span>
                   </div>
 
                   <div className="block">
